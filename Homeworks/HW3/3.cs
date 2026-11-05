@@ -102,17 +102,16 @@ internal class Program
         Console.WriteLine($"Кол-во персонажей: {Character.HowMany()}");
         Console.WriteLine($"Бой начинается!");
         int round = 1;
-        while (hero.IsAlive() && enemy.IsAlive())
+        int i = 0;
+        while (true)
         {
+            int next = (i == battlefield.Count -1) ? 0 : i + 1;
             Console.WriteLine($"Раунд {round}");
-            hero.Attack(enemy);
-            Console.WriteLine(enemy);
-            if (!enemy.IsAlive()) break;
-            Console.WriteLine();
-            enemy.Attack(hero);
-            Console.WriteLine(hero);
-            round++;
-            Console.WriteLine();
+            battlefield[i].Attack(battlefield[next]);
+            Console.WriteLine(battlefield[next]);
+            if (!battlefield[next].IsAlive()) break;
+            if (i == battlefield.Count - 1) {i = 0; round++;}
+            else i++;
         }
         Console.WriteLine("Конец игры");
         if (hero.IsAlive())
